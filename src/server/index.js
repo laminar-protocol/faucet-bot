@@ -21,20 +21,20 @@ const amountDefault = JSON.stringify({
   XBTC: 0.1,
 });
 
-app.get("/health", (_, res) => {
-  res.send("Faucet backend is healthy.");
-});
-
-const createAndApplyActions = async () => {
+const createAndApplyActions = async (router) => {
   const actions = new Actions();
   await actions.create(mnemonic, wssUrl);
 
-  app.get("/balance", async (_, res) => {
+  router.get("/health", (_, res) => {
+    res.send("Faucet backend is healthy.");
+  });
+
+  router.get("/balance", async (_, res) => {
     const balance = await actions.checkBalance();
     res.send(JSON.stringify(balance));
   });
 
-  app.post("/bot-endpoint", async (req, res) => {
+  router.post("/bot-endpoint", async (req, res) => {
     const { address, amount, sender } = req.body;
 
     if (!(await storage.isValid(sender, address))) {
@@ -48,11 +48,15 @@ const createAndApplyActions = async () => {
     res.send(hash);
   });
 
-  app.post("/web-endpoint", (req, res) => {});
+  router.post("/web-endpoint", (req, res) => {});
 };
 
 const main = async () => {
-  await createAndApplyActions();
+  const router = express.Router();
+
+  await createAndApplyActions(router);
+
+  app.use("/faucet", router);
 
   app.listen(port, () =>
     console.log(`Faucet backend listening on port ${port}.`)
