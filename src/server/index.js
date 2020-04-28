@@ -20,7 +20,6 @@ const amountDefault = JSON.stringify({
   DOT: 2,
   XBTC: 0.1,
 });
-console.log(`amountDefault: ${amountDefault}`);
 
 app.get("/health", (_, res) => {
   res.send("Faucet backend is healthy.");

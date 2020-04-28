@@ -23,7 +23,6 @@ class Actions {
       this.api.tx.currencies.transfer(address, "DOT", formatNum(amount.DOT)), // dot 2
       this.api.tx.currencies.transfer(address, "XBTC", formatNum(amount.XBTC)), // xbtc 0.1
     ]);
-    console.log(amount);
     const hash = await batchTransfer.signAndSend(this.account);
 
     return hash.toHex();

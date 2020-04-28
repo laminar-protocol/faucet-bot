@@ -7,7 +7,7 @@ module.exports = {
       autorestart: true,
       watch: false,
       max_memory_restart: "1G",
-      env_production: {
+      env_prod: {
         MNEMONIC: "",
         WSS_URL: "ws://127.0.0.1:9944",
       },
