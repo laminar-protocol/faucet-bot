@@ -2,7 +2,7 @@ const Datastore = require('nedb');
 const crypto = require('crypto');
 
 const SECOND  = 1000;
-const HOUR    = 60 * SECOND;
+const HOUR    = 60 * 60 * SECOND;
 const DAY     = 24 * HOUR;
 
 const CompactionTimeout = 10 * SECOND;

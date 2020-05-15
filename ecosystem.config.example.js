@@ -13,8 +13,8 @@ module.exports = {
       },
     },
     {
-      name: "bot",
-      script: "src/bot/index.js",
+      name: "matrix",
+      script: "src/matrix/index.js",
       instances: 1,
       autorestart: true,
       watch: false,
@@ -22,6 +22,18 @@ module.exports = {
       env_prod: {
         MATRIX_ACCESS_TOKEN: "",
         MATRIX_USER_ID: "",
+        BACKEND_URL: "",
+      },
+    },
+    {
+      name: "discord",
+      script: "src/discord/index.js",
+      instances: 1,
+      autorestart: true,
+      watch: false,
+      max_memory_restart: "1G",
+      env_prod: {
+        TOKEN: "",
         BACKEND_URL: "",
       },
     },
