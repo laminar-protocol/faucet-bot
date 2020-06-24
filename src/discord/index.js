@@ -1,4 +1,4 @@
-!drip 5ES9fyfV56kkEP1qazNzN1S6YwbSTfFWp2Q3i4QG4eyT2Ngconst Discord = require("discord.js");
+const Discord = require("discord.js");
 const axios = require("axios");
 require("dotenv").config();
 
