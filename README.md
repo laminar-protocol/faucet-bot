@@ -1,4 +1,4 @@
-faucet-bot for Acala testnet
+faucet-bot for Laminar testnet
 
 ## Usage
 

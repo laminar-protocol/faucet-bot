@@ -14,13 +14,6 @@ const port = 5555;
 const mnemonic = process.env.MNEMONIC;
 const wssUrl = process.env.WSS_URL;
 
-const amountDefault = JSON.stringify({
-  ACA: 2,
-  aUSD: 2,
-  DOT: 2,
-  XBTC: 0.1,
-});
-
 const createAndApplyActions = async (router) => {
   const actions = new Actions();
   await actions.create(mnemonic, wssUrl);
@@ -35,7 +28,7 @@ const createAndApplyActions = async (router) => {
   });
 
   router.post("/bot-endpoint", async (req, res) => {
-    const { address, amount, sender } = req.body;
+    const { address, sender } = req.body;
 
     if (!(await storage.isValid(sender, address))) {
       res.send("LIMIT");
@@ -44,8 +37,8 @@ const createAndApplyActions = async (router) => {
 
     await storage.saveData(sender, address);
 
-    const hash = await actions.sendToken(address, amount || amountDefault);
-    res.send(hash);
+    const data = await actions.sendToken(address);
+    res.send(data);
   });
 
   router.post("/web-endpoint", (req, res) => {});

@@ -10,13 +10,15 @@ let ax = axios.create({
 const client = new Discord.Client();
 
 client.on('message', async function (msg) {
+    if (msg.channel.name !== 'laminar-faucet') {
+        return;
+    }
     if (msg.content === 'ping') {
         msg.reply('pong')
     }
 
     let [action, arg0] = msg.content.split(' ');
 
-    const amount = { ACA: 2, aUSD: 2, DOT: 2, XBTC: 0.1 };
     const sender = msg.author.id;
     const senderName = msg.author.username;
 
@@ -30,7 +32,6 @@ client.on('message', async function (msg) {
       const res = await ax.post("/bot-endpoint", {
         sender,
         address: arg0,
-        amount: JSON.stringify(amount),
       });
 
       if (res.data === "LIMIT") {
@@ -39,9 +40,8 @@ client.on('message', async function (msg) {
       }
 
       msg.reply(`
-        Sent ${senderName} ${JSON.stringify(amount)}.
-        Extrinsic hash: ${res.data}.
-        View on [SubScan](https://acala-testnet.subscan.io/extrinsic/${res.data})
+        Sent ${senderName} ${JSON.stringify(res.data.amount)}.
+        Extrinsic hash: ${res.data.hash}.
       `);
     }
 
