@@ -12,8 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@laminar/api": "^0.2.0-beta.119",
-    "@polkadot/api": "^1.19.1",
+    "@laminar/api": "^0.2.0-beta.124",
+    "@polkadot/api": "^1.22.1",
     "axios": "^0.19.0",
     "body-parser": "^1.19.0",
     "bs58": "^4.0.1",
