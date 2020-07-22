@@ -3,7 +3,7 @@ const axios = require("axios");
 require("dotenv").config();
 
 let ax = axios.create({
-  baseURL: `http://localhost:${process.env.PORT || 5555}`,
+  baseURL: `http://localhost:${process.env.PORT || 5555}/faucet`,
   timeout: 10000,
 });
 
@@ -29,20 +29,28 @@ client.on('message', async function (msg) {
     }
 
     if (action === "!drip") {
-      const res = await ax.post("/bot-endpoint", {
-        sender,
-        address: arg0,
-      });
+      try {
+        const res = await ax.post("/bot-endpoint", {
+          sender,
+          address: arg0,
+        });
+  
+        if (res.data === "LIMIT") {
+          msg.reply(`${senderName} has reached their daily quota. Only request twice per 24 hours.`);
+          return;
+        }
+  
+        msg.reply(`
+          Sent ${senderName} ${JSON.stringify(res.data.amount)}.
+          Extrinsic hash: ${res.data.hash}.
+        `);
+      } catch (err) {
+        console.warn('drip error', err, sender, msg.content);
 
-      if (res.data === "LIMIT") {
-        msg.reply(`${senderName} has reached their daily quota. Only request twice per 24 hours.`);
-        return;
+        msg.reply(`
+          Something went wrong. Please try again later or inform Laminar team about this issue.
+        `);
       }
-
-      msg.reply(`
-        Sent ${senderName} ${JSON.stringify(res.data.amount)}.
-        Extrinsic hash: ${res.data.hash}.
-      `);
     }
 
     if (action === "!faucet") {
