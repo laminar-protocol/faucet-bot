@@ -42,7 +42,7 @@ const createAndApplyActions = async (router) => {
     res.send(data);
   });
 
-  router.post("/web-endpoint", (req, res) => {
+  router.post("/web-endpoint", async (req, res) => {
     const { address } = req.body;
     const sender = req.ip;
 
