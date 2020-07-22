@@ -3,7 +3,7 @@ const axios = require("axios");
 require("dotenv").config();
 
 let ax = axios.create({
-  baseURL: process.env.BACKEND_URL,
+  baseURL: `http://localhost:${process.env.PORT || 5555}`,
   timeout: 10000,
 });
 

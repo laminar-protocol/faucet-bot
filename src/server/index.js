@@ -8,8 +8,9 @@ const Storage = require("./storage.js");
 const storage = new Storage();
 
 const app = express();
+app.set('trust proxy', true);
 app.use(bodyParser.json());
-const port = 5555;
+const port = process.env.PORT || 5555;
 
 const mnemonic = process.env.MNEMONIC;
 const wssUrl = process.env.WSS_URL;
@@ -41,7 +42,20 @@ const createAndApplyActions = async (router) => {
     res.send(data);
   });
 
-  router.post("/web-endpoint", (req, res) => {});
+  router.post("/web-endpoint", (req, res) => {
+    const { address } = req.body;
+    const sender = req.ip;
+
+    if (!(await storage.isValid(sender, address))) {
+      res.send("LIMIT");
+      return;
+    }
+
+    await storage.saveData(sender, address);
+
+    const data = await actions.sendToken(address);
+    res.send(data);
+  });
 };
 
 const main = async () => {
