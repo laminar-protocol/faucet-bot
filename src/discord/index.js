@@ -29,28 +29,32 @@ client.on('message', async function (msg) {
     }
 
     if (action === "!drip") {
-      try {
-        const res = await ax.post("/bot-endpoint", {
-          sender,
-          address: arg0,
-        });
-  
-        if (res.data === "LIMIT") {
-          msg.reply(`${senderName} has reached their daily quota. Only request twice per 24 hours.`);
-          return;
-        }
-  
-        msg.reply(`
-          Sent ${senderName} ${JSON.stringify(res.data.amount)}.
-          Extrinsic hash: ${res.data.hash}.
-        `);
-      } catch (err) {
-        console.warn('drip error', err, sender, msg.content);
+      msg.reply(`
+        Laminar faucet is disabled during Mandala trading competition. Please use #acala-faucet instead.
+      `);
 
-        msg.reply(`
-          Something went wrong. Please try again later or inform Laminar team about this issue.
-        `);
-      }
+      // try {
+      //   const res = await ax.post("/bot-endpoint", {
+      //     sender,
+      //     address: arg0,
+      //   });
+  
+      //   if (res.data === "LIMIT") {
+      //     msg.reply(`${senderName} has reached their daily quota. Only request twice per 24 hours.`);
+      //     return;
+      //   }
+  
+      //   msg.reply(`
+      //     Sent ${senderName} ${JSON.stringify(res.data.amount)}.
+      //     Extrinsic hash: ${res.data.hash}.
+      //   `);
+      // } catch (err) {
+      //   console.warn('drip error', err, sender, msg.content);
+
+      //   msg.reply(`
+      //     Something went wrong. Please try again later or inform Laminar team about this issue.
+      //   `);
+      // }
     }
 
     if (action === "!faucet") {
