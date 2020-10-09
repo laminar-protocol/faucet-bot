@@ -10,7 +10,7 @@ let ax = axios.create({
 const client = new Discord.Client();
 
 client.on('message', async function (msg) {
-    if (msg.channel.name !== 'laminar-faucet') {
+    if (msg.channel.name !== 'laminar-testnet-faucet') {
         return;
     }
     if (msg.content === 'ping') {
