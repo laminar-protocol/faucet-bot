@@ -42,7 +42,7 @@ client.on('message', async function (msg) {
   
         msg.reply(`
           Sent ${senderName} ${JSON.stringify(res.data.amount)}.
-          Extrinsic hash: ${res.data.hash}.
+          View on Subscan: https://laminar-testnet.subscan.io/extrinsic/${res.data.hash}.
         `);
       } catch (err) {
         console.warn('drip error', err, sender, msg.content);
